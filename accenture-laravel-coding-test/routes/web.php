@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\EventViewController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +18,27 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('/events', function() {
+//     return view('events');
+// });
+
+// List
+Route::get('events', [EventViewController::class, 'index']);
+
+// Search
+// Route::get('search', [EventViewController::class, 'search']);
+
+// Create
+Route::view('create', 'createEvent');
+Route::post('events/create', [EventViewController::class, 'create']);
+
+// Edit
+Route::get('event/{id}', [EventViewController::class, 'show']);
+Route::post('event/{id}/edit', [EventViewController::class, 'update']);
+
+// Delete
+Route::get('/delete/{id}', [EventViewController::class, 'destroy']);
+
+Route::get('search', [EventViewController::class, 'index'])->name('search');
+Route::get('autocomplete', [EventViewController::class, 'autocomplete'])->name('autocomplete');
