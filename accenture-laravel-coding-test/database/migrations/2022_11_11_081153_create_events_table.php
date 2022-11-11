@@ -14,12 +14,12 @@ class CreateEventsTable extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary()->unique();
             $table->string('name');                         // name column 
-            $table->string('slug');                         // slug column 
+            $table->string('slug')->unique();                         // slug column 
             $table->dateTime('createdAt')->nullable();      // createdAt column
-            $table->dateTime('updatedAt')->nullable();
-            $table->timestamps();
+            $table->dateTime('updatedAt')->nullable();      // updatedAt column
+            // $table->timestamps();
         });
     }
 
