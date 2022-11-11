@@ -10,4 +10,11 @@ class Event extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'startAt',
+        'endAt',
+    ];
 }

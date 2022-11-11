@@ -22,6 +22,12 @@ class EventFactory extends Factory
             'id'=>$this->faker->uuid,
             'name'=>$this->faker->name,
             'slug'=>$this->faker->slug,
+            'startAt'=>function(){
+                return date('Y-m-d H:i:s', rand(0, time()));
+            },
+            'endAt'=>function(){
+                return date('Y-m-d H:i:s', rand(0, time()));
+            },
             'createdAt'=> function(){
                 return date('Y-m-d H:i:s', rand(0, time()));
             },
