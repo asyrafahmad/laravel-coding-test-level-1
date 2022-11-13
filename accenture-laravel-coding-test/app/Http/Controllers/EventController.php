@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Event;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -63,7 +64,13 @@ class EventController extends Controller
         $event->endAt = $request->input('endAt');               //retrieving user inputs
         $event->createdAt = date('Y-m-d h:i:s', time());        //retrieving user inputs
         $event->save();                                         //storing values as an object
-        
+
+        // Mailtrap after event was created
+        Mail::send('emails.eventCreatedMail', $event->toArray(), function($message) {
+            $message->to('asyrafEmailReceived@gmail.com', 'Accenture Mail Trap');
+            $message->subject('Event was Created');
+        });
+
         return $event;                                          //returns the stored value if the operation was successful.
     }
 
