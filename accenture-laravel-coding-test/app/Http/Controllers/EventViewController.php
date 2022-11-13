@@ -18,9 +18,7 @@ class EventViewController extends Controller
      */
     public function index()
     {
-        $data = Event::paginate(5);
-
-        return view('events', ['eventsList'=>$data]);
+      
     }
 
     /**
@@ -44,8 +42,7 @@ class EventViewController extends Controller
             $message->subject('Event was Created');
         });
 
-        return redirect('events');
-        // return $request;
+        return redirect('home');
     }
 
     /**
@@ -103,7 +100,7 @@ class EventViewController extends Controller
         $event->endAt = $request->input('endAt');               // retrieves user input
         $event->save();                                         // saves the values in the database. The existing data is overwritten.
        
-        return redirect('events');                              // retrieves the updated object from the database
+        return redirect('home');                              // retrieves the updated object from the database
     }
 
     /**
@@ -116,7 +113,7 @@ class EventViewController extends Controller
     {
         $event = Event::findorFail($id);                        //searching for object in database using ID
         if($event->delete()){                                   //deletes the object
-            return redirect('events');                          //shows a message when the delete operation was successful.
+            return redirect('home');                          //shows a message when the delete operation was successful.
         }
     }
 

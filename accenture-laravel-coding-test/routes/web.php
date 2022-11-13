@@ -43,7 +43,7 @@ Route::get('/delete/{id}', [EventViewController::class, 'destroy']);
 
 // Calling External API
 Route::get('university', [UniversityAPIController::class, 'index']);
-Route::get('countryList/select', [UniversityAPIController::class, 'show']);
+Route::get('select_university', [UniversityAPIController::class, 'show']);
 
 Auth::routes();
 

@@ -134,7 +134,7 @@
                            <br>
                         </div>
                         <br><br>
-                        <form method="get" action="countryList/select">
+                        <form method="get" action="select_university">
                             @csrf
                             <div class="form-group">
                                 <label for="country">Select Country : </label>
