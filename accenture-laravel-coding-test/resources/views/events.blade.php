@@ -102,11 +102,10 @@
             }
         </style>
 
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script type="text/javascript">
-            var siteUrl = "{{url('/')}}";
-        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
@@ -139,22 +138,19 @@
                            <br>
                         </div>
                         <br><br>
-                        <!-- <form  action="search" method="GET" enctype="multipart/form-data">
-                            <div>
-                                Keyword : <input type="text" name="search_keyword"></input>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button name="Submit">Search</a>
-                            </div>
-                        </form> -->
                         <form name="autocomplete-textbox" id="autocomplete-textbox" method="post" action="#">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Search Event By Name</label>
-                                <input type="text" id="name" name="name" class="form-control">
+                                <label>Search Event</label>
+                                <input type="text" name="search" id="search" placeholder="Enter search name" class="form-control" onfocus="this.value=''">
                             </div>
+                            <div id="search_event_list"></div>
                         </form>
+                     
+                        
+                
                         <br><br>
-                        <div>
+                        <div id="event_list">
                             <table class="table table-bordered" width="1200px">
                                 <thead>
                                     <tr>
@@ -187,6 +183,7 @@
                             <br><br> 
                             <div width="100px">
                             {{ $eventsList->links()}}
+                            </div>
                             </span>
                         </div>
                     </div>
@@ -195,28 +192,24 @@
         </div>
 
         <script>
-            $(document).ready(function() {
-                $("#name").autocomplete({
-            
-                    source: function(request, response) {
-                        $.ajax({
-                            url: siteUrl + '/' +"autocomplete",
-                            data: {
-                                term : request.term
-                            },
-                            dataType: "json",
-                            success: function(data){
-                                var resp = $.map(data,function(obj){
-                                        return obj.name;
-                                }); 
-                
-                                response(resp);
-                            }
-                        });
-                    },
-
-                    minLength: 2
-                });
+            $(document).ready(function(){
+            $('#search').on('keyup',function(){
+                var query= $(this).val();
+                $.ajax({
+                    url:"search",
+                    type:"GET",
+                    data:{'search':query},
+                    success:function(data){
+                        if(data == null){
+                            document.getElementById("event_list").style.display = "block";
+                        }else{
+                            $('#search_event_list').html(data);
+                            document.getElementById("event_list").style.display = "none";
+                        }
+                    }
+            });
+            //end of ajax call
+            });
             });
         </script>
     </body>

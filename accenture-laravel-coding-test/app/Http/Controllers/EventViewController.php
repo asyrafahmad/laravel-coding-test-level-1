@@ -139,4 +139,66 @@ class EventViewController extends Controller
     
         return response()->json($res);
     }
+
+    public function search(Request $request){
+
+        if($request->ajax()){
+    
+            $data=Event::where('name','like','%'.$request->search.'%')
+            ->orwhere('slug','like','%'.$request->search.'%')->get();
+    
+    
+            $output='';
+        if(count($data)>0){
+    
+             $output ='
+                <table class="table table-bordered" width="1200px">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">startAt</th>
+                    <th scope="col">endAt</th>
+                    <th scope="col"><h2><a href="create">Create Event</button></h2></th>
+                </tr>
+                </thead>
+                <tbody>';
+    
+                    foreach($data as $row){
+                        $output .='
+                        <tr>
+                        <th scope="row">'.$row->id.'</th>
+                        <th scope="row">'.$row->name.'</th>
+                        <td>'.$row->slug.'</td>
+                        <td>'.$row->startAt.'</td>
+                        <td>'.$row->endAt.'</td>
+                        <td><a href="event/'.$row->id.'"]>View</a> 
+                        &nbsp;&nbsp;
+                        <a href="delete/'.$row->id.'">Delete</a></td>
+                        </tr>
+                        ';
+                    }
+    
+             $output .= '
+                 </tbody>
+                </table>';
+    
+    
+    
+        }
+        else{
+    
+            $output .='No results';
+    
+        }
+    
+        return $output;
+    
+        }
+    
+    
+    
+    
+      }
 }

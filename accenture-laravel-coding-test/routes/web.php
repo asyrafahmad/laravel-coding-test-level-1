@@ -28,12 +28,7 @@ Route::get('/', function () {
 Route::get('events', [EventViewController::class, 'index']);
 
 // Search
-// Route::get('search', [EventViewController::class, 'search']);
-
-
-
-Route::get('university', [UniversityAPIController::class, 'index']);
-Route::get('countryList/select', [UniversityAPIController::class, 'show']);
+Route::get("search",[EventViewController::class,'search']);
 
 // Create
 Route::view('create', 'createEvent');
@@ -46,8 +41,9 @@ Route::post('event/{id}/edit', [EventViewController::class, 'update']);
 // Delete
 Route::get('/delete/{id}', [EventViewController::class, 'destroy']);
 
-Route::get('search', [EventViewController::class, 'index'])->name('search');
-Route::get('autocomplete', [EventViewController::class, 'autocomplete'])->name('autocomplete');
+// Calling External API
+Route::get('university', [UniversityAPIController::class, 'index']);
+Route::get('countryList/select', [UniversityAPIController::class, 'show']);
 
 Auth::routes();
 
