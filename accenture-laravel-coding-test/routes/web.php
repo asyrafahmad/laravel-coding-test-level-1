@@ -16,7 +16,7 @@ use App\Http\Controllers\EventViewController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Route::get('/events', function() {

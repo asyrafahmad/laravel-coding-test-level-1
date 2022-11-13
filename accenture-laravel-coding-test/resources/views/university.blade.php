@@ -139,21 +139,6 @@
                            <br>
                         </div>
                         <br><br>
-                        <!-- <form  action="search" method="GET" enctype="multipart/form-data">
-                            <div>
-                                Keyword : <input type="text" name="search_keyword"></input>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button name="Submit">Search</a>
-                            </div>
-                        </form> -->
-                        <form name="autocomplete-textbox" id="autocomplete-textbox" method="post" action="#">
-                            @csrf
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Search Event By Name</label>
-                                <input type="text" id="name" name="name" class="form-control">
-                            </div>
-                        </form>
-                        <br><br>
                         <div>
                             <table class="table table-bordered" width="1200px">
                                 <thead>

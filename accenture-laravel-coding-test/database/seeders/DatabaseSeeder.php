@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        Event::factory()->times(5)->create();                // generate 50 records
+        Event::factory()->times(50)->create();                // generate 50 records
     }
 }
