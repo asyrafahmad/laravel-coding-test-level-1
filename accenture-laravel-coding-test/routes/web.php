@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\EventViewController;
+use App\Http\Controllers\UniversityAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\EventViewController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Route::get('/events', function() {
@@ -27,7 +28,7 @@ Route::get('/', function () {
 Route::get('events', [EventViewController::class, 'index']);
 
 // Search
-// Route::get('search', [EventViewController::class, 'search']);
+Route::get("search",[EventViewController::class,'search']);
 
 // Create
 Route::view('create', 'createEvent');
@@ -40,5 +41,10 @@ Route::post('event/{id}/edit', [EventViewController::class, 'update']);
 // Delete
 Route::get('/delete/{id}', [EventViewController::class, 'destroy']);
 
-Route::get('search', [EventViewController::class, 'index'])->name('search');
-Route::get('autocomplete', [EventViewController::class, 'autocomplete'])->name('autocomplete');
+// Calling External API
+Route::get('university', [UniversityAPIController::class, 'index']);
+Route::get('select_university', [UniversityAPIController::class, 'show']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

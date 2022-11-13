@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->name('events.')->group(function () {
 
     Route::get('events', [EventController::class, 'index'])->name('index');
+    Route::get('events_cache', [EventController::class, 'index_cache'])->name('index_cache');
     Route::get('events/active-events', [EventController::class, 'activeEvent'])->name('activeEvent');
     Route::get('events/{id}', [EventController::class, 'show'])->name('show');
     Route::post('events', [EventController::class, 'store'])->name('store');

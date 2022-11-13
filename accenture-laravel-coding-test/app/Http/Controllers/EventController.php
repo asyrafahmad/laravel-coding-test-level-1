@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\Event;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redis;
 
 class EventController extends Controller
 {
@@ -17,7 +20,23 @@ class EventController extends Controller
      */
     public function index()
     {
-        return Event::orderBy('createdAt', 'asc')->get();       //returns values in ascending order
+        /* without caching */
+        return Event::orderBy('createdAt', 'asc')->get(); 
+    }
+
+    public function index_cache()
+    {
+        /* without caching */
+        // return Event::orderBy('createdAt', 'asc')->get(); 
+
+        /* with caching */
+        // return Cache::remember('get_events',1, function() {
+        //     return Event::orderBy('createdAt', 'asc')->get();       //returns values in ascending order
+        // });
+
+        return Redis::get('get_events',1, function() {
+            return Event::orderBy('createdAt', 'asc')->get();       //returns values in ascending order
+        });
     }
 
     public function activeEvent(Request $request)
@@ -63,7 +82,13 @@ class EventController extends Controller
         $event->endAt = $request->input('endAt');               //retrieving user inputs
         $event->createdAt = date('Y-m-d h:i:s', time());        //retrieving user inputs
         $event->save();                                         //storing values as an object
-        
+
+        // Mailtrap after event was created
+        Mail::send('emails.eventCreatedMail', $event->toArray(), function($message) {
+            $message->to('asyrafEmailReceived@gmail.com', 'Accenture Mail Trap');
+            $message->subject('Event was Created');
+        });
+
         return $event;                                          //returns the stored value if the operation was successful.
     }
 
@@ -118,9 +143,9 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = Event::findorFail($id);                         //searching for object in database using ID
-        if($event->delete()){                                   //deletes the object
-            return 'Successfully delete this UUID';                      //shows a message when the delete operation was successful.
+        $event = Event::findorFail($id);                        // searching for object in database using ID
+        if($event->delete()){                                   // delete the object
+            return 'Successfully delete this UUID';             // shows a message when the delete operation was successful.
         }
     }
 }
